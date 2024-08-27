@@ -50,6 +50,7 @@ int nQueen(int tuple[], int row){
          
           if(row ==max-1 && isGoalReached(tuple, row))
                     {  
+                        printf("ans %d: ",++count);
                         for(int i=0; i<max; i++)
                     printf("%d ",tuple[i]+1);
                 
