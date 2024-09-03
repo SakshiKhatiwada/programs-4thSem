@@ -3,8 +3,12 @@
 
 #include <iostream>
 using namespace std;
+
 // #define maxLetters 10
 #define maxStates 4
+
+//function declaration
+void print (char currentState,char finalState);
 
 int main()
 {
@@ -23,9 +27,12 @@ int main()
     // cout<<inputLetters.length(); ->it works
     for (int i = 0; i < inputLetters.length(); i++)
     {
-        // for state 1
-        if (currentState == states[0])
+
+        switch (currentState)
         {
+
+        // for state 1
+        case 'a':
             if (inputLetters[i] == '0')
             {
                 currentState = 'b';
@@ -35,11 +42,10 @@ int main()
                 currentState = 'a';
             }
             // else it will stay as it is
-        }
+        break;
 
         // for state 2
-        if (currentState == states[1])
-        {
+       case 'b':
             if (inputLetters[i] == '0')
             {
                 currentState = 'c';
@@ -48,11 +54,11 @@ int main()
             {
                 currentState = 'a';
             }
-        }
+        break;
 
         // for state 3
-        if (currentState == states[2])
-        {
+       case 'c':
+        
             if (inputLetters[i] == '0')
             {
                 currentState = 'd';
@@ -61,21 +67,28 @@ int main()
             {
                 currentState = 'a';
             }
-        }
+        break;
 
         // for state 4
-        if (currentState == states[3])
-        {
+       case 'd':
             if (inputLetters[i] == '1')
             {
                 currentState = 'a';
             }
             // for 0, it stays there
+        break;
+    }  
         }
-    }
+    print(currentState,finalState);
 
-    // printing the output
-    cout << "Currently in state: " << currentState << "\n";
+    return 0;
+}
+
+// function definitions
+ // printing the output
+void print (char currentState,char finalState)
+{
+      cout << "Currently in state: " << currentState << "\n";
     if (currentState == finalState)
     {
         cout << "The string is accepted.\n";
@@ -84,6 +97,4 @@ int main()
     {
         cout << "The string is not accepted.\n";
     }
-
-    return 0;
 }
