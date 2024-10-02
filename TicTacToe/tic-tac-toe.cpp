@@ -1,15 +1,15 @@
 // Tic Tac Toe implementation using Cpp
 
 #include <iostream>
+#include <stdlib.h>
 #include <iomanip>
 #define size 3
 using namespace std;
 
 class TicTacToe
 {
-    char Board[size][size], playerA, playerB, turn = 'a';
-    bool gameOver = false;
-    int x, y, played = 0;
+    char Board[size][size], playerA, playerB, turn = 'X';
+    int x, y;
 
 public:
     TicTacToe()
@@ -18,7 +18,7 @@ public:
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
-                Board[i][j] = ' ';
+                Board[i][j] = '-';
         }
         // print();
     }
@@ -34,96 +34,122 @@ public:
 
     void input()
     {
-        do
+        while(true)
         {
             cout << "Specify the position:\nx: ";
             cin >> x;
             cout << "y: ";
             cin >> y;
 
+
             if (x <= size && x > 0 && y <= size && y > 0)
             {
-                if (turn == 'a')
+                if (turn == 'X')
                 {
                     Board[x - 1][y - 1] = 'O';
-                    if (++played > 2)
-                        whoWon();
-                    turn = 'b';
+                    print();
+                    if (whoWon(turn))
+                    {
+                         cout<<turn;
+                        printf("X won!");
+                        exit(0);
+                    }
+                    turn = 'Y';
                 }
                 else
                 {
                     Board[x - 1][y - 1] = 'X';
-                    if (++played > size-1)
-                        whoWon();
-                    turn = 'a';
+                    print();
+                    if (whoWon(turn))
+                    {
+                         cout<<turn;
+                        printf("X won!");
+                        exit(0);
+                    }
+                    turn = 'X';
                 }
             }
             else
             {
                 cout << "Invalid input, try again!\n";
             }
-            print();
             // cout<<"game over or not "<<gameOver<<endl;
-        } while (gameOver == false);
+        } 
 
-        if (turn == 'a')
-        {
-            cout << "B won!";
-        }
-        else
-            cout << "A won!";
+    //     if (turn == 'X')
+    //     {
+          
+    //         cout << "Y won!";
+    //     }
+    //     else
+    //        cout<<turn;
+    //         cout << "X won!";
     }
 
-    void whoWon()
+    bool whoWon(char turn)
     {
-        int case1 = 0, case2 = 0, case3 = 0;
-        cout << "checking who wins\n";
+        // int case1 = 0, case2 = 0, case3 = 0;
+        // cout << "checking who wins\n";
 
         for (int i = 0; i < size; i++)
         {
-            for (int j = 0; j < size; j++)
-            {
-                if (Board[i][j] != ' ')
-                {
-                    if (Board[i][j] == Board[i][i])
-                    {
-                        case1++;
-                    }
 
-                    if (Board[j][i] == Board[i][i])
-                       {
-                        case2++;
-                    }
+            if (Board[i][0] == turn && Board[i][1] == turn && Board[i][2] == turn)
+                return true;
+            if (Board[0][i] == turn && Board[1][i] == turn && Board[2][i] == turn)
+                return true;
+        }
 
-                    if (Board[i][i] == Board[j][j])
-                       {
-                        case3++;
-                    }
-                }
-            
-            if (case1 == 3 | case2 == 3 | case3 == 3)
-                {
-                    // cout << "if someone won";
-                    gameOver = true;
-                    return;
-                }
-                else
-                {
-                    // cout << "if no one won";
-                    case1 = case2 = case3 = 0;
-                }
+        // for diagonal
+        if (Board[0][0] == turn && Board[1][1] == turn && Board[2][2] == turn)
+            return true;
+        if (Board[0][2] == turn && Board[1][1] == turn && Board[2][0] == turn)
+            return true;
 
-            }
-          }
-            }
-    };
 
-    int main()
-    {
-        cout << "--------------Welcome to Tic Tac Toe--------------\n";
-        cout << "Player A: O and player B: X\nSpecify your position as the position of the box as x:1/2/3 y:1/2/3\n";
-        cout << "-----------------------------------------------------\n";
-        TicTacToe obj;
-        obj.input();
-        return 0;
+return false;
+        //---Previous Logic I tried, didn't work!
+
+        // for (int j = 0; j < size; j++)
+        // {
+        //     if (Board[i][j] != ' ')
+        //     {
+        //         if (Board[i][j] == Board[i][i])
+        //         {
+        //             case1++;
+        //         }
+
+        //         if (Board[j][i] == Board[i][i])
+        //            {
+        //             case2++;
+        //         }
+
+        //         if (Board[i][i] == Board[j][j])
+        //            {
+        //             case3++;
+        //         }
+        //     }
+
+        // if (case1 == 3 | case2 == 3 | case3 == 3)
+        //     {
+        //         // cout << "if someone won";
+        //         gameOver = true;
+        //         return;
+        //     }
+        //     else
+        //     {
+        //         // cout << "if no one won";
+        //         case1 = case2 = case3 = 0;
+        //     }
     }
+};
+
+int main()
+{
+    cout << "--------------Welcome to Tic Tac Toe--------------\n";
+    cout << "Player A: X and player B: 0\nSpecify your position as the position of the box as x:1/2/3 y:1/2/3\n";
+    cout << "-----------------------------------------------------\n";
+    TicTacToe obj;
+    obj.input();
+    return 0;
+}
